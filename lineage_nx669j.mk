@@ -22,21 +22,24 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
 
 # Inherit from nx669j device
-$(call inherit-product, $(LOCAL_PATH)/device.mk)
+$(call inherit-product, device/nubia/nx669j/device.mk)
 
-PRODUCT_BRAND := nubia
-PRODUCT_DEVICE := nx669j
-PRODUCT_MANUFACTURER := nubia
+# Device identifier. This must come after all inclusions.
 PRODUCT_NAME := lineage_nx669j
+PRODUCT_DEVICE := nx669j
+PRODUCT_BRAND := Nubia
+PRODUCT_MANUFACTURER := Nubia
 PRODUCT_MODEL := NX669J
 
-TARGET_VENDOR_PRODUCT_NAME := NX669J
-TARGET_VENDOR_DEVICE_NAME := NX669J
+PRODUCT_CHARACTERISTICS := nosdcard
+
+# Boot animation
+TARGET_SCREEN_HEIGHT := 1920
+TARGET_SCREEN_WIDTH := 1080
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
     PRIVATE_BUILD_DESC="NX669J-user 11 RKQ1.210614.002 nubia.20230628.204332 release-keys" \
-    PRODUCT_DEVICE=NX669J \
-    PRODUCT_NAME=NX669J \
+    TARGET_PRODUCT=NX669J \
     TARGET_DEVICE=NX669J
 
 BUILD_FINGERPRINT := nubia/NX669J/NX669J:11/RKQ1.210614.002/nubia.20230628.204332:user/release-keys

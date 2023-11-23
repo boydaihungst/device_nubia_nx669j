@@ -1,4 +1,4 @@
 hidl_package_root {
-    name: "vendor.nubia.ifaa",
+    name: "vendor.nubia",
     path: "device/nubia/nx669j/interfaces/nubia",
 }

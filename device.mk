@@ -20,11 +20,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 # Setup dalvik vm configs
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
+# Installs gsi keys into ramdisk, to boot a developer GSI with verified boot.
+$(call inherit-product, $(SRC_TARGET_DIR)/product/developer_gsi_keys.mk)
+
 # Inherit proprietary libraries
 $(call inherit-product, vendor/nubia/nx669j/nx669j-vendor.mk)
 
 # Inherit display makefiles
-$(call inherit-product, hardware/qcom-caf/sm8250/display/config/display-board.mk)
+$(call inherit-product, hardware/qcom-caf/sm8350/display/config/display-board.mk)
 
 -include $(LOCAL_PATH)/properties.mk
 
@@ -57,52 +60,50 @@ PRODUCT_PACKAGES += \
 
 # # Audio
 # PRODUCT_PACKAGES += \
-#     android.hardware.audio@6.0-impl \
-#     android.hardware.audio.effect@6.0-impl \
-#     android.hardware.audio.service \
-#     android.hardware.bluetooth.audio-impl \
-#     android.hardware.soundtrigger@2.3-impl \
-#     audio.bluetooth.default \
-#     audio.primary.lahaina \
-#     audio.r_submix.default \
-#     audio.usb.default \
-#     liba2dpoffload \
-#     libbatterylistener \
-#     libcomprcapture \
-#     libexthwplugin \
-#     libhdmiedid \
-#     libhfp \
-#     libqcompostprocbundle \
-#     libqcomvisualizer \
-#     libqcomvoiceprocessing \
-#     libsndmonitor \
-#     libspkrprot \
-#     libssrec \
-#     libvolumelistener
-
-# Audio
-PRODUCT_PACKAGES += \
     android.hardware.audio@6.0-impl \
-    android.hardware.audio.common@2.0-util \
-    android.hardware.audio.common@6.0-util \
     android.hardware.audio.effect@6.0-impl \
     android.hardware.audio.service \
-    android.hardware.bluetooth.audio@2.0-impl \
+    android.hardware.bluetooth.audio-impl \
     android.hardware.soundtrigger@2.3-impl \
-    audio.a2dp.default \
     audio.bluetooth.default \
-    audio.primary.default \
+    audio.primary.lahaina \
     audio.r_submix.default \
     audio.usb.default \
+    libbatterylistener \
+    libcomprcapture \
+    libexthwplugin \
     libhdmiedid \
     libhfp \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
-    libvolumelistener \
-    tinymix \
-    libtinycompress \
-    libtinycompress.vendor
+    libsndmonitor \
+    libspkrprot \
+    libssrec \
+    libvolumelistener
+
+# Audio
+# PRODUCT_PACKAGES += \
+    # android.hardware.audio@6.0-impl \
+    # android.hardware.audio.common@2.0-util \
+    # android.hardware.audio.common@6.0-util \
+    # android.hardware.audio.effect@6.0-impl \
+    # android.hardware.audio.service \
+    # android.hardware.bluetooth.audio@2.0-impl \
+    # android.hardware.soundtrigger@2.3-impl \
+    # audio.bluetooth.default \
+    # audio.primary.default \
+    # audio.r_submix.default \
+    # audio.usb.default \
+    # libhdmiedid \
+    # libhfp \
+    # libqcompostprocbundle \
+    # libqcomvisualizer \
+    # libqcomvoiceprocessing \
+    # libvolumelistener \
+    # tinymix \
+    # libtinycompress \
+    # libtinycompress.vendor
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
@@ -463,7 +464,7 @@ PRODUCT_PACKAGES += \
     extphonelib_product.xml \
     ims-ext-common \
     ims_ext_common.xml \
-    tcmiface \
+		tcmiface \
     telephony-ext \
     qti-telephony-hidl-wrapper \
     qti-telephony-hidl-wrapper-prd \
@@ -475,7 +476,7 @@ PRODUCT_PACKAGES += \
     qti_telephony_utils_prd.xml
 
 PRODUCT_BOOT_JARS += \
-    tcmiface \
+		tcmiface \
     telephony-ext
 
 PRODUCT_COPY_FILES += \
