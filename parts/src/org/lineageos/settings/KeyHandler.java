@@ -45,6 +45,7 @@ public class KeyHandler implements DeviceKeyHandler {
     public KeyEvent handleKeyEvent(KeyEvent event) {
         int scanCode = event.getScanCode();
 
+        Log.w(TAG, "Game mode switcher: " + scanCode);
         switch(scanCode) {
             case KEY_GAMESWITCH_OFF:
                 mAudioManager.setRingerModeInternal(AudioManager.RINGER_MODE_SILENT);

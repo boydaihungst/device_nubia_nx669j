@@ -4,15 +4,19 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-#define LOG_TAG "lineage.touch@1.0-service.nx659j"
+#define LOG_TAG "lineage.touch@1.0-service.nx669j"
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
 
 #include "HighTouchPollingRate.h"
+#include "GloveMode.h"
 
 using ::vendor::lineage::touch::V1_0::IHighTouchPollingRate;
 using ::vendor::lineage::touch::V1_0::implementation::HighTouchPollingRate;
+
+using ::vendor::lineage::touch::V1_0::IGloveMode;
+using ::vendor::lineage::touch::V1_0::implementation::GloveMode;
 
 int main() {
     android::sp<IHighTouchPollingRate> highTouchPollingRate = new HighTouchPollingRate();
@@ -21,6 +25,15 @@ int main() {
 
     if (highTouchPollingRate->registerAsService() != android::OK) {
         LOG(ERROR) << "Cannot register touchscreen high polling rate HAL service.";
+        return 1;
+    }
+
+    android::sp<IGloveMode> gloveMode = new GloveMode();
+
+    android::hardware::configureRpcThreadpool(1, true);
+
+    if (gloveMode->registerAsService() != android::OK) {
+        LOG(ERROR) << "Cannot register touchscreen glove mode HAL service.";
         return 1;
     }
 

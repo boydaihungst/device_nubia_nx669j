@@ -21,6 +21,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Parcel;
 import android.os.RemoteException;
+import android.os.SystemProperties
 import android.preference.PreferenceManager;
 import android.provider.Settings;
 import android.widget.Switch;
@@ -45,12 +46,12 @@ public class FanFragment extends PreferenceFragment implements
     public static final String KEY_FAN_MODE = "fan_control_mode";
     public static final String KEY_FAN_MANUAL = "fan_control_manual_slider";
 
-    public static final String SMART_FAN = "/sys/kernel/fan/fan_smart";
+    public static final String SMART_FAN = "sys.fan.thermal_auto";
     public static final String SPEED_LEVEL = "/sys/kernel/fan/fan_speed_level";
 
     public static final int FAN_AUTO_VALUE = 1;
     public static final int FAN_MANUAL_VALUE = 2;
-    private static final int FAN_MIN_VALUE = 1;
+    private static final int FAN_MIN_VALUE = 3;
     private static final int FAN_MAX_VALUE = 5;
 
     private MainSwitchPreference mSwitchBar;
@@ -114,14 +115,14 @@ public class FanFragment extends PreferenceFragment implements
         if (enabled) {
             SettingsUtils.setEnabled(getActivity(), KEY_FAN_ENABLE, enabled);
             if (fanModeValue == FAN_AUTO_VALUE) {
-                FileUtils.writeLine(SMART_FAN, "1");
+                SystemProperties.set(SMART_FAN, "1");
             } else if (fanModeValue == FAN_MANUAL_VALUE) {
-                manualFanValue = String.valueOf(SettingsUtils.getInt(getActivity(), KEY_FAN_MANUAL, 1));
+                manualFanValue = String.valueOf(SettingsUtils.getInt(getActivity(), KEY_FAN_MANUAL, 3));
                 FileUtils.writeLine(SPEED_LEVEL, manualFanValue);
             }
         } else {
             FileUtils.writeLine(SPEED_LEVEL, "0");
-            FileUtils.writeLine(SMART_FAN, "0");
+            SystemProperties.set(SMART_FAN, "0");
         }
     }
 
@@ -151,12 +152,12 @@ public class FanFragment extends PreferenceFragment implements
                 summary = getResources().getString(R.string.fan_control_auto_summary);
                 mFanManualBar.setVisible(false);
                 FileUtils.writeLine(SPEED_LEVEL, "0");
-                FileUtils.writeLine(SMART_FAN, "1");
+                SystemProperties.set(SMART_FAN, "1");
             } else if (intValue == FAN_MANUAL_VALUE) {
-                String manualFanValue = String.valueOf(SettingsUtils.getInt(getContext(), KEY_FAN_MANUAL, 1));
+                String manualFanValue = String.valueOf(SettingsUtils.getInt(getContext(), KEY_FAN_MANUAL, 3));
                 summary = getResources().getString(R.string.fan_control_manual_summary);
                 mFanManualBar.setVisible(true);
-                FileUtils.writeLine(SMART_FAN, "0");
+                SystemProperties.set(SMART_FAN, "0");
                 FileUtils.writeLine(SPEED_LEVEL, manualFanValue);
             }
             mFanControlMode.setSummary(summary);

@@ -17,6 +17,7 @@
 
 package org.lineageos.settings;
 
+import android.os.SystemProperties
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -42,7 +43,7 @@ public class BootCompletedReceiver extends BroadcastReceiver {
 
         if (SettingsUtils.getEnabled(context, FanFragment.KEY_FAN_ENABLE)) {
             if (intValue == FanFragment.FAN_AUTO_VALUE) {
-                FileUtils.writeLine(FanFragment.SMART_FAN, "1");
+                SystemProperties.set(SMART_FAN, "1");
             } else if (intValue == FanFragment.FAN_MANUAL_VALUE) {
                 String fanSpeed = String.valueOf(SettingsUtils.getInt(context, FanFragment.KEY_FAN_MANUAL, 1));
                 FileUtils.writeLine(FanFragment.SPEED_LEVEL, fanSpeed);

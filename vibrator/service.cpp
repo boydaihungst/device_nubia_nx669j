@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "android.hardware.vibrator@1.0-service.nx659j"
+#define LOG_TAG "android.hardware.vibrator@1.0-service.nx669j"
 
 #include <android-base/logging.h>
 #include <hidl/HidlTransportSupport.h>
@@ -45,6 +45,6 @@ int main() {
 
     joinRpcThreadpool();
 
-    LOG(ERROR) << "FOD HAL service failed to join thread pool.";
+    LOG(ERROR) << "vibrator HAL service failed to join thread pool.";
     return 1;
 }

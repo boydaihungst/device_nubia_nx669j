@@ -14,30 +14,21 @@
  * limitations under the License.
  */
 
-#define LOG_TAG "vendor.lineage.livedisplay@2.0-service.nx659j"
+#define LOG_TAG "vendor.lineage.livedisplay@2.0-service.nx669j"
 
 #include <android-base/logging.h>
 #include <binder/ProcessState.h>
 #include <hidl/HidlTransportSupport.h>
 
-#include "AdaptiveBacklight.h"
 #include "SunlightEnhancement.h"
 
-using ::vendor::lineage::livedisplay::V2_0::IAdaptiveBacklight;
 using ::vendor::lineage::livedisplay::V2_0::ISunlightEnhancement;
-using ::vendor::lineage::livedisplay::V2_0::implementation::AdaptiveBacklight;
 using ::vendor::lineage::livedisplay::V2_0::implementation::SunlightEnhancement;
 
 int main() {
-    android::sp<IAdaptiveBacklight> adaptiveBacklight = new AdaptiveBacklight();
     android::sp<ISunlightEnhancement> sunlightEnhancement = new SunlightEnhancement();
 
     android::hardware::configureRpcThreadpool(1, true /*callerWillJoin*/);
-
-    if (adaptiveBacklight->registerAsService() != android::OK) {
-        LOG(ERROR) << "Cannot register adaptive backlight HAL service.";
-        return 1;
-    }
 
     if (sunlightEnhancement->registerAsService() != android::OK) {
         LOG(ERROR) << "Cannot register sunlight enhancement HAL service.";

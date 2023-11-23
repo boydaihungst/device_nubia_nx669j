@@ -21,7 +21,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/updatable_apex.mk)
 $(call inherit-product, frameworks/native/build/phone-xhdpi-6144-dalvik-heap.mk)
 
 # Inherit proprietary libraries
-$(call inherit-product, vendor/nubia/nx659j/nx659j-vendor.mk)
+$(call inherit-product, vendor/nubia/nx669j/nx669j-vendor.mk)
 
 # Inherit display makefiles
 $(call inherit-product, hardware/qcom-caf/sm8250/display/config/display-board.mk)
@@ -29,36 +29,80 @@ $(call inherit-product, hardware/qcom-caf/sm8250/display/config/display-board.mk
 -include $(LOCAL_PATH)/properties.mk
 
 # Shipping API level
-PRODUCT_SHIPPING_API_LEVEL := 29
+# PRODUCT_SHIPPING_API_LEVEL := 30
+
+# VNDK
+PRODUCT_TARGET_VNDK_VERSION := 30
 
 # ANT+
 PRODUCT_PACKAGES += \
     com.dsi.ant@1.0.vendor
 
+# A/B
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_system=true \
+    POSTINSTALL_PATH_system=system/bin/otapreopt_script \
+    FILESYSTEM_TYPE_system=ext4 \
+    POSTINSTALL_OPTIONAL_system=true
+
+AB_OTA_POSTINSTALL_CONFIG += \
+    RUN_POSTINSTALL_vendor=true \
+    POSTINSTALL_PATH_vendor=bin/checkpoint_gc \
+    FILESYSTEM_TYPE_vendor=ext4 \
+    POSTINSTALL_OPTIONAL_vendor=true
+
+PRODUCT_PACKAGES += \
+    checkpoint_gc \
+    otapreopt_script
+
+# # Audio
+# PRODUCT_PACKAGES += \
+#     android.hardware.audio@6.0-impl \
+#     android.hardware.audio.effect@6.0-impl \
+#     android.hardware.audio.service \
+#     android.hardware.bluetooth.audio-impl \
+#     android.hardware.soundtrigger@2.3-impl \
+#     audio.bluetooth.default \
+#     audio.primary.lahaina \
+#     audio.r_submix.default \
+#     audio.usb.default \
+#     liba2dpoffload \
+#     libbatterylistener \
+#     libcomprcapture \
+#     libexthwplugin \
+#     libhdmiedid \
+#     libhfp \
+#     libqcompostprocbundle \
+#     libqcomvisualizer \
+#     libqcomvoiceprocessing \
+#     libsndmonitor \
+#     libspkrprot \
+#     libssrec \
+#     libvolumelistener
+
 # Audio
 PRODUCT_PACKAGES += \
     android.hardware.audio@6.0-impl \
+    android.hardware.audio.common@2.0-util \
+    android.hardware.audio.common@6.0-util \
     android.hardware.audio.effect@6.0-impl \
     android.hardware.audio.service \
-    android.hardware.bluetooth.audio-impl \
+    android.hardware.bluetooth.audio@2.0-impl \
     android.hardware.soundtrigger@2.3-impl \
+    audio.a2dp.default \
     audio.bluetooth.default \
-    audio.primary.kona \
+    audio.primary.default \
     audio.r_submix.default \
     audio.usb.default \
-    liba2dpoffload \
-    libbatterylistener \
-    libcomprcapture \
-    libexthwplugin \
     libhdmiedid \
     libhfp \
     libqcompostprocbundle \
     libqcomvisualizer \
     libqcomvoiceprocessing \
-    libsndmonitor \
-    libspkrprot \
-    libssrec \
-    libvolumelistener
+    libvolumelistener \
+    tinymix \
+    libtinycompress \
+    libtinycompress.vendor
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/audio/audio_effects.xml:$(TARGET_COPY_OUT_VENDOR)/etc/audio_effects.xml \
@@ -79,18 +123,31 @@ PRODUCT_COPY_FILES += \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/r_submix_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/r_submix_audio_policy_configuration.xml \
     $(TOPDIR)frameworks/av/services/audiopolicy/config/usb_audio_policy_configuration.xml:$(TARGET_COPY_OUT_VENDOR)/etc/usb_audio_policy_configuration.xml
 
+# Authsecret
+PRODUCT_PACKAGES += \
+    android.hardware.authsecret@1.0.vendor
+
 # Bluetooth
 PRODUCT_PACKAGES += \
-    android.hardware.bluetooth@1.1.vendor \
-    vendor.qti.hardware.bluetooth_audio@2.1.vendor \
-    vendor.qti.hardware.btconfigstore@1.0.vendor \
-    vendor.qti.hardware.btconfigstore@2.0.vendor
+    BluetoothQti \
+    com.qualcomm.qti.bluetooth_audio@1.0.vendor \
+    liba2dpoffload \
+    libbluetooth_qti \
+    libbthost_if \
+    vendor.qti.hardware.bluetooth_audio@2.0.vendor \
+    vendor.qti.hardware.btconfigstore@1.0.vendor
+
+# Boot control
+PRODUCT_PACKAGES += \
+    android.hardware.boot@1.2-impl-qti \
+    android.hardware.boot@1.2-impl-qti.recovery \
+    android.hardware.boot@1.2-service
 
 # Camera
 PRODUCT_PACKAGES += \
     android.hardware.camera.provider@2.4-impl \
     android.hardware.camera.provider@2.4-service_64 \
-    android.frameworks.sensorservice@1.0.vendor \
+    camera.device@3.5-impl \
     libcamera2ndk_vendor \
     vendor.qti.hardware.camera.device@1.0.vendor \
     vendor.qti.hardware.camera.postproc@1.0.vendor
@@ -106,42 +163,42 @@ PRODUCT_PACKAGES += \
 # Display
 PRODUCT_PACKAGES += \
     android.hardware.graphics.mapper@3.0-impl-qti-display \
-    android.hardware.graphics.mapper@4.0-impl-qti-display \
     android.hardware.memtrack@1.0-impl \
     android.hardware.memtrack@1.0-service \
-    gralloc.kona \
-    libdisplayconfig.qti \
-    libdisplayconfig.system.qti \
+    android.hardware.renderscript@1.0-impl \
+    gralloc.lahaina \
+    libdisplayconfig \
+    libdisplayconfig.vendor \
     libqdMetaData \
     libqdMetaData.system \
+    libqdutils.vendor \
+    libsdedrm \
     libsdmcore \
     libsdmutils \
-    memtrack.kona \
-    libtinyxml \
-    libvulkan \
-    vendor.display.config@1.9.vendor \
-    vendor.display.config@2.0 \
-    vendor.display.config@2.0.vendor \
+    memtrack.lahaina \
+    vendor.display.config@1.15.vendor \
     vendor.qti.hardware.display.allocator-service \
+    vendor.qti.hardware.display.allocator@3.0.vendor \
     vendor.qti.hardware.display.composer-service \
+    vendor.qti.hardware.display.composer@2.1.vendor \
+    vendor.qti.hardware.display.mapper@1.0.vendor \
     vendor.qti.hardware.display.mapper@1.1.vendor \
     vendor.qti.hardware.display.mapper@2.0.vendor \
     vendor.qti.hardware.display.mapper@3.0.vendor \
-    vendor.qti.hardware.display.mapper@4.0.vendor
-
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/configs/display/qdcm_calib_data_r66451_amoled_cmd_mode_dsi_visionox_panel_with_DSC.xml:$(TARGET_COPY_OUT_VENDOR)/etc/qdcm_calib_data_r66451_amoled_cmd_mode_dsi_visionox_panel_with_DSC.xml \
-    $(LOCAL_PATH)/configs/display/qdcm_calib_data_r66451_amoled_new_cmd_mode_dsi_visionox_panel_with_DSC.xml:$(TARGET_COPY_OUT_VENDOR)/etc/qdcm_calib_data_r66451_amoled_new_cmd_mode_dsi_visionox_panel_with_DSC.xml
+    vendor.qti.hardware.display.mapperextensions@1.1.vendor
 
 # DRM
 PRODUCT_PACKAGES += \
-    android.hardware.drm@1.3.vendor \
-    android.hardware.drm@1.4.vendor \
-    android.hardware.drm-service.clearkey
+    android.hardware.drm@1.0-impl \
+    android.hardware.drm@1.0-service \
+    android.hardware.drm@1.2-service.clearkey
 
 # fastbootd
 PRODUCT_PACKAGES += \
-    fastbootd.nx659j
+    fastbootd
+
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/display/qdcm_calib_data_dsi_vdtr6130_1080_2400_amoled_command_dphy_panel.xml:$(TARGET_COPY_OUT_VENDOR)/etc/qdcm_calib_data_dsi_vdtr6130_1080_2400_amoled_command_dphy_panel.xml 
 
 # Fingerprint
 PRODUCT_PACKAGES += \
@@ -159,22 +216,16 @@ PRODUCT_PACKAGES += \
 
 # Fstab
 PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_RAMDISK)/fstab.qcom
+    $(LOCAL_PATH)/rootdir/etc/fstab.qcom:$(TARGET_COPY_OUT_VENDOR_RAMDISK)/first_stage_ramdisk/fstab.qcom
 
 # Health
 PRODUCT_PACKAGES += \
-    android.hardware.health@2.1-impl:64 \
-    android.hardware.health@2.1-impl.recovery \
-    android.hardware.health@2.1-service
+    android.hardware.health@2.0-service
 
 # HIDL
 PRODUCT_PACKAGES += \
     android.hidl.base@1.0 \
-    android.hidl.base@1.0.vendor \
-    libhidltransport \
-    libhwbinder \
-    libhidltransport.vendor \
-    libhwbinder.vendor
+    android.hidl.base@1.0_system
 
 # IPACM
 PRODUCT_PACKAGES += \
@@ -197,17 +248,32 @@ PRODUCT_PACKAGES += \
 
 # Light
 PRODUCT_PACKAGES += \
-    android.hardware.lights-service.nx659j
+    android.hardware.lights-service.nx669j
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
     vendor.lineage.livedisplay@2.0-service-sdm \
-    vendor.lineage.livedisplay@2.0-service.nx659j
+    vendor.lineage.livedisplay@2.0-service.nx669j
 
 # Media
 PRODUCT_PACKAGES += \
     libavservices_minijail \
     libavservices_minijail.vendor
+
+# Media
+PRODUCT_COPY_FILES += \
+    $(AUDIO_HAL_DIR)/configs/common/media_codecs_vendor_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_vendor_audio.xml \
+    $(LOCAL_PATH)/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs.xml \
+    $(LOCAL_PATH)/configs/media_codecs.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_lahaina.xml \
+    $(LOCAL_PATH)/configs/media_codecs_lahaina_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_lahaina_vendor.xml \
+    $(LOCAL_PATH)/configs/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance.xml \
+    $(LOCAL_PATH)/configs/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance_lahaina.xml \
+    $(LOCAL_PATH)/configs/media_codecs_performance.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_performance_lahaina_vendor.xml \
+    $(LOCAL_PATH)/configs/media_profiles.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles.xml \
+    $(LOCAL_PATH)/configs/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_lahaina.xml \
+    $(LOCAL_PATH)/configs/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_lahaina_vendor.xml \
+    $(LOCAL_PATH)/configs/media_profiles_vendor.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_vendor.xml \
+    $(LOCAL_PATH)/configs/media_profiles_V1_0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_profiles_V1_0.xml
 
 PRODUCT_COPY_FILES += \
     frameworks/av/media/libstagefright/data/media_codecs_google_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_google_audio.xml \
@@ -226,6 +292,7 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     android.hardware.neuralnetworks@1.3.vendor
 
+
 # OMX
 PRODUCT_PACKAGES += \
     libc2dcolorconvert \
@@ -241,18 +308,16 @@ PRODUCT_PACKAGES += \
     libOmxVdec \
     libOmxVenc \
     libOmxVidcCommon \
-    libplatformconfig \
     libstagefrighthw
 
 # Namespaces
 PRODUCT_SOONG_NAMESPACES += \
-    device/nubia/nx659j \
+    device/nubia/nx669j \
     hardware/nubia \
     vendor/qcom/opensource/usb/etc
 
 # NFC
 PRODUCT_PACKAGES += \
-    android.hardware.nfc@1.2-service.samsung \
     NfcNci \
     Tag \
     SecureElement
@@ -358,10 +423,10 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     librmnetctl
 
-PRODUCT_PACKAGES += \
-    android.hardware.radio@1.6.vendor \
-    android.hardware.radio.config@1.3.vendor \
-    android.hardware.radio.deprecated@1.0.vendor
+# PRODUCT_PACKAGES += \
+#     android.hardware.radio@1.6.vendor \
+#     android.hardware.radio.config@1.3.vendor \
+#     android.hardware.radio.deprecated@1.0.vendor
 
 # Ramdisk
 PRODUCT_PACKAGES += \
@@ -390,25 +455,41 @@ PRODUCT_COPY_FILES += \
 PRODUCT_PACKAGES += \
     android.hardware.sensors@2.0-service.multihal
 
-# Telephony
+# Telephony - CLO
 PRODUCT_PACKAGES += \
+    extphonelib \
+    extphonelib-product \
+    extphonelib.xml \
+    extphonelib_product.xml \
     ims-ext-common \
     ims_ext_common.xml \
+    tcmiface \
+    telephony-ext \
     qti-telephony-hidl-wrapper \
+    qti-telephony-hidl-wrapper-prd \
     qti_telephony_hidl_wrapper.xml \
+    qti_telephony_hidl_wrapper_prd.xml \
     qti-telephony-utils \
+    qti-telephony-utils-prd \
     qti_telephony_utils.xml \
-    telephony-ext
+    qti_telephony_utils_prd.xml
 
 PRODUCT_BOOT_JARS += \
+    tcmiface \
     telephony-ext
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/privapp-permissions-qti.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/permissions/privapp-permissions-qti.xml
 
+# Thermal
+PRODUCT_PACKAGES += \
+    android.hardware.thermal@2.0-impl \
+    android.hardware.thermal@2.0-service.qti \
+    thermal.lahaina
+
 # Touch
 PRODUCT_PACKAGES += \
-    vendor.lineage.touch@1.0-service.nx659j
+    vendor.lineage.touch@1.0-service.nx669j
 
 # Trustzone
 PRODUCT_PACKAGES += \
@@ -417,7 +498,7 @@ PRODUCT_PACKAGES += \
 
 # USB
 PRODUCT_PACKAGES += \
-    android.hardware.usb@1.3-service-qti
+    android.hardware.usb@1.2-service-qti
 
 PRODUCT_PACKAGES += \
     init.qcom.usb.rc \
@@ -429,7 +510,7 @@ PRODUCT_PACKAGES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    android.hardware.vibrator@1.0-service.nx659j
+    android.hardware.vibrator@1.0-service.nx669j
 
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/excluded-input-devices.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/excluded-input-devices.xml

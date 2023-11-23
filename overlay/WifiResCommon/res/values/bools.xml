@@ -53,4 +53,9 @@
 
     <!-- Wifi driver supports IEEE80211AX for softap -->
     <bool name="config_wifiSoftapIeee80211axSupported">true</bool>
+
+    <bool name="config_wifiAllowMultipleNetworksOnSameAwareNdi">true</bool>
+    <bool name="config_wifi_batched_scan_supported">true</bool>
+    <bool name="config_wifi_only_link_same_credential_configurations">false</bool>
+
 </resources>

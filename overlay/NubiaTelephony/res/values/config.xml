@@ -19,7 +19,9 @@
 <!-- Phone app resources that may need to be customized
      for different hardware or product builds. -->
 <resources>
-
+    <bool name="world_phone">true</bool>
+    <bool name="dtmf_type_enabled">true</bool>
+    <bool name="csp_enabled">true</bool>
     <!-- Flag indicating whether the device supports RTT (real-time text) -->
     <bool name="config_support_rtt">true</bool>
 

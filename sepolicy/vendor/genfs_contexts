@@ -3,13 +3,16 @@ genfscon sysfs /devices/platform/soc/c440000.qcom,spmi/spmi-0/spmi0-02/c440000.q
 genfscon sysfs /devices/platform/soc/884000.i2c/i2c-6/6-0057/power_supply u:object_r:vendor_sysfs_battery_supply:s0
 
 # Extcon
-genfscon sysfs /devices/platform/vendor/vendor:extcon_usb1/extcon u:object_r:sysfs_extcon:s0
+genfscon sysfs /devices/platform/soc/soc:qcom,msm-ext-disp/extcon(/.*) u:object_r:sysfs_extcon:s0
 
 # Fan node
 genfscon sysfs /kernel/fan u:object_r:sysfs_fan:s0
 
 # Leds
-genfscon sysfs /devices/platform/soc/994000.i2c/i2c-3/3-006a/leds/aw22xxx_led/trigger u:object_r:sysfs_leds:s0
+genfscon sysfs /devices/platform/soc/[a-f0-9][a-f0-9][a-f0-9]000.i2c/i2c-[0-9]+/[0-9]+-006a/leds/aw22xxx_led(/.*)?    u:object_r:sysfs_leds:s0
+
+# sensors
+genfscon sysfs /class/sensors u:object_r:vendor_sysfs_sensors:s0
 
 # Light sensor
 genfscon sysfs /class/light/light u:object_r:vendor_sysfs_sensors:s0
@@ -17,7 +20,9 @@ genfscon sysfs /devices/virtual/light/light u:object_r:vendor_sysfs_sensors:s0
 
 # Livedisplay
 genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/cabc u:object_r:sysfs_cabc:s0
-genfscon sysfs /devices/platform/soc/soc:qcom,dsi-display-primary/hbm u:object_r:sysfs_hbm:s0
+
+genfscon sysfs /kernel/lcd_enhance/lhbm_mode u:object_r:sysfs_hbm:s0
+genfscon sysfs /kernel/lcd_enhance/hbm_mode u:object_r:sysfs_hbm:s0
 
 # Proximity sensor
 genfscon sysfs /class/proximity/proximity u:object_r:vendor_sysfs_sensors:s0
@@ -25,6 +30,20 @@ genfscon sysfs /devices/virtual/proximity/proximity u:object_r:vendor_sysfs_sens
 
 # Touchscreen
 genfscon sysfs /kernel/tp_node u:object_r:sysfs_tp:s0
+
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/virtual_tp                u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/fpswitch                  u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/enable            u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/chip_info         u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/fp                u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/prevention        u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/sensitivity       u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/open_sensitivity  u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/levelregion       u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/separation        u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/rate              u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/highrate          u:object_r:sysfs_tp:s0
+genfscon sysfs /devices/platform/nubia_goodix_ts.0/gesture/open_prevention   u:object_r:sysfs_tp:s0
 
 # Triggers
 genfscon sysfs /devices/platform/soc/988000.i2c/i2c-1/1-0010/mode u:object_r:sysfs_touchkey:s0

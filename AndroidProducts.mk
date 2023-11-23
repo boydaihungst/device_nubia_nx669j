@@ -14,9 +14,9 @@
 # limitations under the License.
 
 PRODUCT_MAKEFILES := \
-    $(LOCAL_DIR)/lineage_nx659j.mk
+    $(LOCAL_DIR)/lineage_nx669j.mk
 
 COMMON_LUNCH_CHOICES := \
-    lineage_nx659j-eng \
-    lineage_nx659j-user \
-    lineage_nx659j-userdebug
+    lineage_nx669j-eng \
+    lineage_nx669j-user \
+    lineage_nx669j-userdebug

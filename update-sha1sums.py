@@ -20,7 +20,7 @@ import os
 import sys
 from hashlib import sha1
 
-device = 'nx659j'
+device = 'nx669j'
 vendor = 'nubia'
 
 with open('proprietary-files.txt', 'r') as f:

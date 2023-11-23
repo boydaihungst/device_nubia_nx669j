@@ -35,8 +35,8 @@ import org.lineageos.settings.utils.SettingsUtils;
 
 public class TriggersFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     public static final String KEY_TRIGGERS_DISABLE = "triggers_disable";
-    public static final String KEY_TRIGGERS_MODE_FILE1 = "/sys/devices/platform/soc/988000.i2c/i2c-1/1-0010/mode";
-    public static final String KEY_TRIGGERS_MODE_FILE2 = "/sys/devices/platform/soc/990000.i2c/i2c-2/2-0010/mode";
+    public static final String KEY_TRIGGERS_MODE_FILE1 = "/sys/devices/platform/soc/a88000.i2c/i2c-3/3-0010/mode";
+    public static final String KEY_TRIGGERS_MODE_FILE2 = "/sys/devices/platform/soc/998000.i2c/i2c-1/1-0010/mode";
 
     private SharedPreferences mPrefs;
     @Override

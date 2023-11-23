@@ -14,13 +14,12 @@
 // limitations under the License.
 
 cc_binary {
-    name: "vendor.lineage.livedisplay@2.0-service.nx659j",
+    name: "vendor.lineage.livedisplay@2.0-service.nx669j",
     defaults: ["hidl_defaults"],
-    vintf_fragments: ["vendor.lineage.livedisplay@2.0-service.nx659j.xml"],
-    init_rc: ["vendor.lineage.livedisplay@2.0-service.nx659j.rc"],
+    vintf_fragments: ["vendor.lineage.livedisplay@2.0-service.nx669j.xml"],
+    init_rc: ["vendor.lineage.livedisplay@2.0-service.nx669j.rc"],
     relative_install_path: "hw",
     srcs: [
-        "AdaptiveBacklight.cpp",
         "SunlightEnhancement.cpp",
         "service.cpp",
     ],

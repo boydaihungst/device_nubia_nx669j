@@ -1,6 +1,6 @@
 #! /vendor/bin/sh
 
-# Copyright (c) 2012-2013,2016,2018-2021 The Linux Foundation. All rights reserved.
+# Copyright (c) 2012-2013,2016,2018-2020 The Linux Foundation. All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions are met:
@@ -25,10 +25,6 @@
 # WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-#
-#Changes from Qualcomm Innovation Center are provided under the following license:
-#Copyright (c) 2022 Qualcomm Innovation Center, Inc. All rights reserved.
-#SPDX-License-Identifier: BSD-3-Clause-Clear
 #
 
 export PATH=/vendor/bin
@@ -374,11 +370,9 @@ case "$target" in
                 setprop vendor.display.enhance_idle_time 1
                 setprop vendor.netflix.bsp_rev ""
                 ;;
-            518|561|586)
-                setprop vendor.media.target.version 3
-                ;;
-            585)
-                setprop vendor.media.target.version 4
+            *)
+                # default case is for bengal
+                setprop vendor.netflix.bsp_rev "Q6115-31409-1"
                 ;;
         esac
         ;;

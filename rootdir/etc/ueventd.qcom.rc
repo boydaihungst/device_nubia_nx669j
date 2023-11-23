@@ -33,7 +33,7 @@ firmware_directories /vendor/firmware_mnt/image/
 # the DIAG device node is not world writable/readable.
 /dev/diag                 0660   system     oem_2901
 /dev/mhi_*_pipe_4         0660   system     system
-/dev/virt-eavb            0660   system     audio
+
 /dev/genlock              0666   system     system
 /dev/wlan                 0660   wifi       wifi
 /dev/kgsl                 0666   system     system
@@ -72,7 +72,6 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/smd2                 0660   bluetooth  bluetooth
 /dev/smd3                 0660   bluetooth  bluetooth
 /dev/btpower              0660   bluetooth  system
-/dev/btfmslim             0660   bluetooth  system
 
 #permissions for pta
 /dev/pta                  0660   system     system
@@ -174,11 +173,29 @@ firmware_directories /vendor/firmware_mnt/image/
 
 #qvr
 /dev/qvr_external_sensor_ioctl      0660  system  system
-/dev/bus/usb/*                      0660  root    usb
-/dev/hidraw*                        0660  root    usb
-
-#rawdump
-/dev/block/platform/soc/*/by-name/rawdump       0660   root     system
+/sys/kernel/qvr_external_sensor/fd  0660  system  system
+/dev/bus/usb/001/002      0660   system     system
+/dev/bus/usb/001/003      0660   system     system
+/dev/bus/usb/001/004      0660   system     system
+/dev/bus/usb/001/005      0660   system     system
+/dev/bus/usb/002/002      0660   system     system
+/dev/bus/usb/002/003      0660   system     system
+/dev/bus/usb/002/004      0660   system     system
+/dev/bus/usb/002/005      0660   system     system
+/dev/bus/usb/003/002      0660   system     system
+/dev/bus/usb/003/003      0660   system     system
+/dev/bus/usb/003/004      0660   system     system
+/dev/bus/usb/003/005      0660   system     system
+/dev/hidraw0              0660   system     system
+/dev/hidraw1              0660   system     system
+/dev/hidraw2              0660   system     system
+/dev/hidraw3              0660   system     system
+/dev/hidraw4              0660   system     system
+/dev/hidraw5              0660   system     system
+/dev/hidraw6              0660   system     system
+/dev/hidraw7              0660   system     system
+/dev/hidraw8              0660   system     system
+/dev/hidraw9              0660   system     system
 
 # wlan
 /dev/wcnss_wlan           0660   system     system
@@ -198,6 +215,7 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_vidc_dec_sec     0660   system     audio
 /dev/msm_vidc_enc         0660   system     audio
 /dev/msm_rotator          0660   system     system
+/dev/hw_random            0600   root       root
 /dev/sdsprpc-smd          0660   system     system
 
 #permissions for audio
@@ -231,7 +249,6 @@ firmware_directories /vendor/firmware_mnt/image/
 /dev/msm_preproc_ctl      0660   system     audio
 /dev/msm_rtac             0660   system     audio
 /dev/msm_voicememo        0660   system     audio
-/dev/virt_sndcard_ctl     0660   system     audio
 /dev/ttyHSL1              0660   system     system
 /dev/ttyHS1               0660   system     system
 /dev/mdm                  0660   system     radio
@@ -388,9 +405,6 @@ firmware_directories /vendor/firmware_mnt/image/
 
 /sys/devices/virtual/hdcp/msm_hdcp  min_level_change 0664    system  graphics
 
-#KGSL
-/sys/class/kgsl/kgsl-3d0    perfcounter              0660    root    shell
-
 # sys-fs display
 /sys/class/graphics/fb*     hpd                      0664    system  graphics
 /sys/class/graphics/fb*     res_info                 0664    system  graphics
@@ -412,7 +426,6 @@ firmware_directories /vendor/firmware_mnt/image/
 /sys/class/graphics/fb*     hdmi_audio_cb            0600    audioserver audio
 
 /sys/class/graphics/fb*     lineptr_value            0664    system  graphics
-/sys/class/drm/sde-crtc-*   lineptr_value            0664    system  graphics
 /sys/class/graphics/fb*     msm_fb_persist_mode      0664    system  graphics
 
 /sys/class/graphics/fb0     idle_time                0664    system  graphics
