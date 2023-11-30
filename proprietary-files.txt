@@ -270,13 +270,13 @@ system_ext/app/atfwd/atfwd.apk
 system_ext/app/MStatsSystemService/MStatsSystemService.apk
 system_ext/app/QColor/QColor.apk
 system_ext/app/SimContact/SimContact.apk
-system_ext/app/aptxals/aptxals.apk
-system_ext/app/QAS_DVC_MSP/QAS_DVC_MSP.apk
-system_ext/app/seccamservice/seccamservice.apk
-system_ext/app/xrcbservice/xrcbservice.apk
-system_ext/app/xrvdservice/xrvdservice.apk
+system_ext/priv-app/aptxals/aptxals.apk
+system_ext/priv-app/QAS_DVC_MSP/QAS_DVC_MSP.apk
+system_ext/priv-app/seccamservice/seccamservice.apk
+system_ext/priv-app/xrcbservice/xrcbservice.apk
+system_ext/priv-app/xrvdservice/xrvdservice.apk
 
-system_ext/etc/lib64/vendor.nb.halserver.nubia_hal_server@1.0.so
+system_ext/lib64/vendor.nb.halserver.nubia_hal_server@1.0.so
 
 
 # Radio
